@@ -65,21 +65,21 @@ public class SocketServerConfigs {
 
     public static final String LISTENERS_CONFIG = "listeners";
     public static final String LISTENERS_DEFAULT = "PLAINTEXT://:9092";
-    public static final String LISTENERS_DOC = "Listener List - Comma-separated list of URIs we will listen on and the listener names." +
-            String.format(" If the listener name is not a security protocol, <code>%s</code> must also be set.%n", LISTENER_SECURITY_PROTOCOL_MAP_CONFIG) +
-            " Listener names and port numbers must be unique unless %n" +
-            " one listener is an IPv4 address and the other listener is %n" +
-            " an IPv6 address (for the same port).%n" +
-            " Specify hostname as 0.0.0.0 to bind to all interfaces.%n" +
-            " Leave hostname empty to bind to default interface.%n" +
-            " Examples of legal listener lists:%n" +
-            " <code>PLAINTEXT://myhost:9092,SSL://:9091</code>%n" +
-            " <code>CLIENT://0.0.0.0:9092,REPLICATION://localhost:9093</code>%n" +
-            " <code>PLAINTEXT://127.0.0.1:9092,SSL://[::1]:9092</code>%n";
+    public static final String LISTENERS_DOC = String.format("Listener List - Comma-separated list of URIs we will listen on and the listener names." +
+                    " If the listener name is not a security protocol, <code>%s</code> must also be set.%n" +
+                    " Listener names and port numbers must be unique unless one listener is an IPv4 address and the other listener is an IPv6 address (for the same port).%n" +
+                    " Specify hostname as 0.0.0.0 to bind to all interfaces.%n" +
+                    " Leave hostname empty to bind to default interface.%n" +
+                    " Examples of legal listener lists:%n" +
+                    " <code>PLAINTEXT://myhost:9092,SSL://:9091</code>%n" +
+                    " <code>CLIENT://0.0.0.0:9092,REPLICATION://localhost:9093</code>%n" +
+                    " <code>PLAINTEXT://127.0.0.1:9092,SSL://[::1]:9092</code>%n", LISTENER_SECURITY_PROTOCOL_MAP_CONFIG);
 
     public static final String ADVERTISED_LISTENERS_CONFIG = "advertised.listeners";
-    public static final String ADVERTISED_LISTENERS_DOC = String.format(
-            "Listeners to publish to ZooKeeper for clients to use, if different than the <code>%s</code> config property." +
+    public static final String ADVERTISED_LISTENERS_DOC = String.format("Specifies the listener addresses that the Kafka brokers will advertise to clients and other brokers." +
+                    " The config is useful where the actual listener configuration <code>%s</code> does not represent the addresses that clients should" +
+                    " use to connect, such as in cloud environments. In environments using ZooKeeper, these addresses are published to ZooKeeper." +
+                    " In Kraft mode, the address would be published to and managed by kraft controller, the brokers would pull these data from controller as needed." +
                     " In IaaS environments, this may need to be different from the interface to which the broker binds." +
                     " If this is not set, the value for <code>%1$1s</code> will be used." +
                     " Unlike <code>%1$1s</code>, it is not valid to advertise the 0.0.0.0 meta-address.%n" +

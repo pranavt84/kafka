@@ -151,7 +151,7 @@ public class ConfigurationControlManager {
         this.alterConfigPolicy = alterConfigPolicy;
         this.validator = validator;
         this.configData = new TimelineHashMap<>(snapshotRegistry, 0);
-        this.staticConfig = Collections.unmodifiableMap(new HashMap<>(staticConfig));
+        this.staticConfig = Map.copyOf(staticConfig);
         this.currentController = new ConfigResource(Type.BROKER, Integer.toString(nodeId));
     }
 
@@ -439,7 +439,7 @@ public class ConfigurationControlManager {
         if (map == null) {
             return Collections.emptyMap();
         } else {
-            return Collections.unmodifiableMap(new HashMap<>(map));
+            return Map.copyOf(map);
         }
     }
 
@@ -457,11 +457,10 @@ public class ConfigurationControlManager {
      * @return the config value for the provided config key in the topic
      */
     ConfigEntry getTopicConfig(String topicName, String configKey) throws NoSuchElementException {
-        ConfigEntry result = configSchema.resolveEffectiveTopicConfig(configKey,
+        return configSchema.resolveEffectiveTopicConfig(configKey,
             staticConfig,
             clusterConfig(),
             currentControllerConfig(), currentTopicConfig(topicName));
-        return result;
     }
 
     public Map<ConfigResource, ResultOrError<Map<String, String>>> describeConfigs(
